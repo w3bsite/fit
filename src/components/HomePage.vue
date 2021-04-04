@@ -23,16 +23,23 @@ export default {
     return { items: ["اکشن", "اول شخص", "شوتر", "ورزشی", "RPG"], genre: "ا" };
   },
   components: { topslider, fetchgames },
+  computed: {
+    auth() {
+      return this.$cookies.get("jwt")
+        ? `Bearer ${this.$cookies.get("jwt")}`
+        : "";
+    },
+  },
   chimera: {
     apig() {
       return {
         url: this.$url,
         headers: {
-          Authorization: `Bearer ${this.$cookies.get("jwt")}`
-        }
+          Authorization: ` ${this.auth}`,
+        },
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,13 +1,15 @@
 <template>
   <div>
+    <v-btn @click="$emit('tl', $event)">hey</v-btn>
     <h2>{{ title }}</h2>
-    <signup></signup>
+    <Cart></Cart>
   </div>
 </template>
 <script>
-import signup from "../components/register/signup.vue";
+import Cart from "../components/cart.vue";
+
 export default {
-  components: { signup },
+  components: { Cart },
   name: "key",
   data() {
     return {

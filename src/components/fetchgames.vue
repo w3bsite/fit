@@ -19,6 +19,7 @@
                     <v-card-text>
                       <v-range-slider
                         vertical
+                        @input="page = 1"
                         v-model="value"
                         :tick-labels="label"
                         :max="2023"
@@ -52,7 +53,7 @@
                     lg="4"
                     :key="i"
                     :class="{
-                      red: game.num1 < value[0] || game.num1 > value[1]
+                      red: game.num1 < value[0] || game.num1 > value[1],
                     }"
                   >
                     <v-card style="direction: rtl">
@@ -97,7 +98,7 @@
                             class="text-body-1 text-right"
                             :class="{
                               'white--text': theme,
-                              'grey--text text--darken-4': !theme
+                              'grey--text text--darken-4': !theme,
                             }"
                             style="font-size: 14px !important"
                           >
@@ -108,7 +109,7 @@
                               large
                               :to="{
                                 name: 'single',
-                                params: { id: game.id, single: game }
+                                params: { id: game.id, single: game },
                               }"
                               dark
                               :color="
@@ -158,7 +159,7 @@ export default {
     cmd: { default: 4, type: Number },
     clg: { default: 4, type: Number },
     cwidth: { default: 255, type: Number },
-    cratio: { default: 5 / 7, type: Number }
+    cratio: { default: 5 / 7, type: Number },
   },
   components: {},
 
@@ -174,7 +175,7 @@ export default {
       er: null,
       items: ["اکشن", "اول شخص", "شوتر", "ورزشی", "RPG", " "],
       page: 1,
-      limit: 6
+      limit: 6,
     };
   },
   chimera: {
@@ -183,19 +184,24 @@ export default {
         prefetch: true,
         url: this.$url,
         headers: {
-          Authorization: `Bearer ${this.$cookies.get("jwt")}`
+          Authorization: ` ${this.auth}`,
         },
         params: {
           // caption_contains: this.genre,
-          _sort: this.sort + `:` + this.assend
+          _sort: this.sort + `:` + this.assend,
           // _start: (this.page - 1) * this.limit,
           // _limit: this.limit,
-        }
+        },
       };
-    }
+    },
   },
   methods: {},
   computed: {
+    auth() {
+      return this.$cookies.get("jwt")
+        ? `Bearer ${this.$cookies.get("jwt")}`
+        : "";
+    },
     ipage() {
       return (this.page - 1) * this.limit;
     },
@@ -222,7 +228,7 @@ export default {
     filteredgames() {
       if (this.$chimera.games.data) {
         return this.games.data.filter(
-          e =>
+          (e) =>
             e.caption.includes(this.genre) &&
             (e.num1 > this.value[0] || e.num1 == this.value[0]) &&
             (e.num1 < this.value[1] || e.num1 == this.value[1])
@@ -233,8 +239,8 @@ export default {
     },
     theme() {
       return this.$vuetify.theme.dark ? true : false;
-    }
-  }
+    },
+  },
 };
 </script>
 

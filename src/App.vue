@@ -1,60 +1,33 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
+    <AppBar :class="theme">
+      <v-main>
+        <!-- Provides the application the proper gutter -->
+        <v-container fluid>
+          {{ title }}
+          <keep-alive include="">
+            <router-view @tl="title = 'yyyy'"></router-view>
+          </keep-alive>
+        </v-container>
+      </v-main>
+    </AppBar>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import AppBar from "@/components/Globals/AppBar.vue";
 export default {
-  name: 'App',
+  name: "App",
 
-  components: {
-    HelloWorld,
-  },
+  components: { AppBar },
 
   data: () => ({
-    //
+    title: "hi",
   }),
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? " " : "grey lighten-2";
+    },
+  },
 };
 </script>
