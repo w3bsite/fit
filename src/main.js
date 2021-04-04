@@ -8,7 +8,7 @@ import "./plugins/chimera";
 
 import "./plugins/qs";
 import "./plugins/vuecookies";
-import "./registerServiceWorker";
+// import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
 
